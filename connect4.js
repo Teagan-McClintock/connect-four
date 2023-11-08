@@ -20,7 +20,6 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   //  set "board" to empty HEIGHT x WIDTH matrix array
-  // what if we want to restart the game? - issue with global const
   for (let y = 0; y < HEIGHT; y++) {
 
     let row = [];
@@ -29,7 +28,6 @@ function makeBoard() {
     }
     board.push(row);
   }
-  return;
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -37,8 +35,9 @@ function makeBoard() {
 function makeHtmlBoard() {
   const htmlBoard = document.getElementById("board");
 
+  // generates top row to place chips
   const top = document.createElement("tr");
-  top.setAttribute("id", "column-top"); // generates top row to place chips
+  top.setAttribute("id", "column-top");
 
   // Creates clickable buttons for each cell in the top row
   for (let x = 0; x < WIDTH; x++) {
@@ -74,8 +73,13 @@ function makeHtmlBoard() {
  *    (return null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 5
-  return 5;
+  for (let y = 5; y >= 0; y--)
+  {
+    if (board[y][x] === null){
+      return y;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
