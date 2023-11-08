@@ -37,14 +37,13 @@ function makeBoard() {
 function makeHtmlBoard() {
   const htmlBoard = document.getElementById("board");
 
-  // TODO: add comment for this code
   const top = document.createElement("tr");
-  top.setAttribute("id", "column-top");
+  top.setAttribute("id", "column-top"); // generates top row to place chips
 
-  // TODO: add comment for this code
+  // Creates clickable buttons for each cell in the top row
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
-    headCell.setAttribute("id", `top-${x}`);
+    headCell.setAttribute("id", `top-${x}`); // makes id for each button
     headCell.addEventListener("click", handleClick);
     top.append(headCell);
   }
@@ -55,18 +54,22 @@ function makeHtmlBoard() {
   // uses WIDTH to create table cells for each row
   for (let y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
+    const row = document.createElement('tr');
 
     for (let x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
+      const cell = document.createElement('td');
 
       // TODO: add an id, c-y-x, to the above table cell element
       //   (for example, for the cell at y=2, x=3, the ID should be "c-2-3")
+      cell.setAttribute('id', `c-${y}-${x}`);
 
       // TODO: append the table cell to the table row
+      row.append(cell);
 
     }
     // TODO: append the row to the html board
-
+    htmlBoard.append(row);
   }
 }
 
