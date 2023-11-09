@@ -93,7 +93,9 @@ function placeInTable(y, x) {
   foundCell.appendChild(chip);
 }
 
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
+/** checkForWin: check board cell-by-cell for "does a win start here?"
+ * and return true if so otherwise false
+*/
 
 function checkForWin() {
 
@@ -108,17 +110,30 @@ function checkForWin() {
     // player
 
     for (let cell of cells) {
+      //debugger;
       let y = cell[0];
       let x = cell[1];
       const currentCell = document.getElementById(`c-${y}-${x}`);
+      const currentChip = currentCell.firstElementChild;
 
       // check if given cell contains a player's chip --
-      // if not, they definitely did not win
-      let hasPlayerChip = currentCell.classList.contains(`p${currPlayer}`);
+      // if not, they definitely did not win and we return false
+      let isLegal = !(y > HEIGHT - 1 || y < 0 || x > WIDTH - 1 || x < 0);
+      let hasPlayerChip; //= currentChip.classList.contains(`p${currPlayer}`);
 
+      if (currentChip === null){
+        return false;
+      }
+      else {
+        hasPlayerChip = currentChip.classList.contains(`p${currPlayer}`);
+      }
+
+      if (!(isLegal && hasPlayerChip)){
+        return false;
+      }
 
     }
-
+    return true;
   }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
@@ -132,9 +147,9 @@ function checkForWin() {
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert;
-      let diagDL;
-      let diagDR;
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
