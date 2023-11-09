@@ -86,6 +86,11 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  const foundCell = document.getElementById(`c-${y}-${x}`);
+  const chip = document.createElement('div');
+  chip.classList.add('piece');
+  chip.classList.add(`p${currPlayer}`);
+  foundCell.appendChild(chip);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -101,6 +106,18 @@ function checkForWin() {
 
     // TODO: Check four cells to see if they're all legal & all color of current
     // player
+
+    for (let cell of cells) {
+      let y = cell[0];
+      let x = cell[1];
+      const currentCell = document.getElementById(`c-${y}-${x}`);
+
+      // check if given cell contains a player's chip --
+      // if not, they definitely did not win
+      let hasPlayerChip = currentCell.classList.contains(`p${currPlayer}`);
+
+
+    }
 
   }
 
